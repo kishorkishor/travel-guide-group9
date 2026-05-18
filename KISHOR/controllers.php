@@ -136,7 +136,10 @@ function profileCtrl($conn) {
                 } else {
                     $ext = pathinfo($_FILES['profile_picture']['name'], PATHINFO_EXTENSION);
                     $filename = 'profile_' . $_SESSION['user']['id'] . '_' . time() . '.' . $ext;
-                    $dest = 'uploads/' . $filename;
+                    if (!is_dir('uploads')) {
+                         mkdir('uploads', 0755, true);
+                                                }
+                        $dest = 'uploads/' . $filename;
                     if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $dest)) { 
                         $picturePath = $dest;
                     } else {
